@@ -83,7 +83,8 @@ export default {
     return {
       allTodos: [],
       post: [],
-      put: []
+      put: [],
+      currentId: -1
     }
   },
   mounted() {
@@ -110,8 +111,12 @@ export default {
         console.log(error);
       })
     },
-    addtodos(){
-      axios.post('https://safitodos.000webhostapp.com/api/todos/add')
+    addpost(){
+      axios.post('https://safitodos.000webhostapp.com/api/todos/add',{
+	"td_title":"todo 1",
+	"td_body":"paragraph for todo 1",
+	"td_status":"f"
+})
       .then(response => {
         console.log(response);
         this.post = response.data
@@ -121,7 +126,11 @@ export default {
       })
     },
     updateput() {
-      axios.put('https://safitodos.000webhostapp.com/api/todos/update/{id}')
+      axios.put(`https://safitodos.000webhostapp.com/api/todos/update/{currentId}`,{
+	"td_title":"todo 1",
+	"td_body":"paragraph for todo 1",
+	"td_status":"f"
+})
       .then(response => {
         console.log(response);
         this.put = response.data
@@ -131,7 +140,7 @@ export default {
       })
     },
     deletetodos() {
-      axios.delete('https://safitodos.000webhostapp.com/api/todos/delete/{id')
+      axios.delete(`https://safitodos.000webhostapp.com/api/todos/delete/{currentId}`)
       .then(response => {
         console.log(response)
       })
