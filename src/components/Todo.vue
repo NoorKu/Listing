@@ -73,10 +73,79 @@
         />
       </div>
     </footer>
+    <h1> AllTODOS: {{ AllTODOSItems }} </h1>
 </template>
 
 <script>
+const axios = require('axios');
 export default {
+ data() {
+    return {
+      allTodos: [],
+      post: [],
+      put: []
+    }
+  },
+  mounted() {
+    console.log('page loaded')
+    console.log('all todos', this.allTodos)
+    this.getAllTodos()
+
+    console.log('post')
+    this.addpost()
+
+    console.log('put')
+    this.updateput()
+
+  },
+  methods: {
+    getAllTodos() {
+    axios.get('https://safitodos.000webhostapp.com/api/todos/get/all')
+      .then(response => {
+        console.log(response);
+        this.allTodos = response.data
+      })
+      .catch(error => {
+
+        console.log(error);
+      })
+    },
+    addtodos(){
+      axios.post('https://safitodos.000webhostapp.com/api/todos/add')
+      .then(response => {
+        console.log(response);
+        this.post = response.data
+      })
+      .catch(error =>{
+        console.log(error);
+      })
+    },
+    updateput() {
+      axios.put('https://safitodos.000webhostapp.com/api/todos/update/{id}')
+      .then(response => {
+        console.log(response);
+        this.put = response.data
+      })
+      .catch(error =>{
+        console.log(error)
+      })
+    },
+    deletetodos() {
+      axios.delete('https://safitodos.000webhostapp.com/api/todos/delete/{id')
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    }
+  },
+  computed: {
+      AllTODOSItems() {
+        return this.allTodos.length
+      }
+    },
+
 
 }
 </script>
