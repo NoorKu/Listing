@@ -23,6 +23,7 @@
   <!-- End Header -->
 
   <!-- Start Container -->
+  <!-- Start 1st Face -->
   <div
     class="
       flex
@@ -60,6 +61,86 @@
     <h3>Enter your first task and press enter to save</h3>
   </div>
 
+  <!-- End 1st Face -->
+  <!-- Start 2nd Face -->
+  <div
+    class="
+      bg-gray-50
+      flex
+      justify-between
+      items-center
+      p-4
+      mt-2
+      border-t-2 border-b-2
+      hover:border-gray-300
+    "
+  >
+    <div class="flex justify-start items-center hiddenN">
+      <!-- side icons -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
+        />
+      </svg>
+      <input
+        type="checkbox"
+        id="vehicle1"
+        name="vehicle1"
+        value="Bike"
+        class="w-7 h-7 border-green-700 ml-2"
+      />
+      <p class="text-xs ml-3 bg-gray-200 rounded p-1 text-gray-500">
+        No due date
+      </p>
+    </div>
+    <div class="flex justify-end">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 mx-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+        />
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 mx-2"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 mx-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </div>
+  </div>
+
+  <!-- End 2nd Face -->
   <!-- End Container -->
 
   <!-- Start Footer -->
