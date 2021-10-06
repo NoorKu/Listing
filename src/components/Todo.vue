@@ -38,11 +38,14 @@
   >
     <h2 class="ml-4">Create your to-do list below</h2>
   </div>
-  <div class="flex justify-start text-3xl md:text-5xl lg:text-5xl p-2">
-    <input
-      class="p-3 ml-4"
+  <div
+  
+   class="flex justify-start text-3xl md:text-5xl lg:text-5xl p-2" >
+    <input 
+      class="p-3 ml-4" 
       type="text"
       placeholder="Type here e.g. buy bacon"
+     
     />
   </div>
   <div
@@ -74,28 +77,48 @@
     </div>
   </footer>
   <h1>AllTODOS: {{ AllTODOSItems }}</h1>
+
+  <div v-for="adding in allTodos" :key="adding" class="adding">
+    <p>allTodos: {{ adding.td_title }} {{ adding.td_body }} {{ adding.td_status }}</p>
+    <div id="td">
+      <p>Td_title: {{ adding.td_title}}</p>
+  <p>Td-body: {{ adding.td_body }}</p>
+  <p>Td-status: {{ adding.td_status }}</p>
+    </div>
+  </div>
 </template>
 
 <script>
 const axios = require('axios');
 export default {
+ 
+  
  data() {
     return {
       allTodos: [],
       post: [],
       put: [],
-      currentId: -1
+      currentId: -1,
+      todosId: []
+    
+     
     }
-  },
+       
+      
+    },
+  
   mounted() {
     console.log('page loaded')
     console.log('all todos', this.allTodos)
     this.getAllTodos()
 
+    console.log('tododId')
+    this.addtodosId()
+
     console.log('post')
     this.addpost()
 
-    console.log('put')
+    console.log('post')
     this.updateput()
 
   },
@@ -105,12 +128,24 @@ export default {
       .then(response => {
         console.log(response);
         this.allTodos = response.data
+        
       })
       .catch(error => {
 
-        console.log(error);
+        console.log(error)
       })
     },
+    addtodosId() {
+      axios.get(`https://safitodos.000webhostapp.com/api/todos/get/${currentId}`)
+      .then(response => {
+        console.log(response);
+        this.todosId = response.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+    
     addpost(){
       axios.post('https://safitodos.000webhostapp.com/api/todos/add',{
 	"td_title":"todo 1",
@@ -126,39 +161,60 @@ export default {
       })
     },
     updateput() {
-      axios.put(`https://safitodos.000webhostapp.com/api/todos/update/{currentId}`,{
+      axios.post(`https://safitodos.000webhostapp.com/api/todos/update/{currentId}`,{
 	"td_title":"todo 1",
 	"td_body":"paragraph for todo 1",
 	"td_status":"f"
 })
       .then(response => {
         console.log(response);
-        this.put = response.data
+        this.post = response.data
       })
       .catch(error =>{
         console.log(error)
       })
     },
     deletetodos() {
-      axios.delete(`https://safitodos.000webhostapp.com/api/todos/delete/{currentId}`)
+      axios.post(`https://safitodos.000webhostapp.com/api/todos/delete/{currentId}`)
       .then(response => {
         console.log(response)
       })
       .catch(error => {
         console.log(error)
       })
-    }
+    },
   },
   computed: {
       AllTODOSItems() {
         return this.allTodos.length
-      }
-    },
+      },
+     
+  }
 
 
 }
 </script>
 
 <style>
+.adding {
+  margin-top: 5px;
+  font-size: 20px;
+  font-style: italic;
+  padding: 10px 15px;
+}
+.adding p:first-child {
+  font-weight: bold;
+  font-style: normal;
+}
+.adding #td p:first-child{
+  font-weight: normal;
+  font-style: italic;
+}
+.adding #td p {
+  background-color: gray;
+  color: black
+}
+
+
 
 </style>
