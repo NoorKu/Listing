@@ -159,7 +159,7 @@
   </footer>
 
 <div class="add">
-    <button @click="addnewtodos">AddNewTodo</button>
+    <button @click="addpost">AddNewTodo</button>
 </div>
 
 
@@ -215,6 +215,10 @@ export default {
   },
   methods: {
     getAllTodos() {
+      /*let url = 'https://safitodos.000webhostapp.com/api/todos/get/all'
+      this.makeAPICall(url).then(data => {
+        console.log('fetching data', data)
+      })*/
     axios.get('https://safitodos.000webhostapp.com/api/todos/get/all')
       .then(response => {
         console.log(response);
@@ -227,7 +231,7 @@ export default {
       })
     },
 
-    addtodosId() {
+    addtodosId(currentId) {
       axios.get(`https://safitodos.000webhostapp.com/api/todos/get/${currentId}`)
       .then(response => {
         console.log(response);
@@ -240,21 +244,16 @@ export default {
     },
     
     addpost(){
-      axios.post('https://safitodos.000webhostapp.com/api/todos/add',{
-	"td_title":"todo 1",
-	"td_body":"paragraph for todo 1",
-	"td_status":"f"
-})
-      .then(response => {
-        console.log(response);
-        this.post = response.data
-      })
-      .catch(error =>{
-        console.log(error);
-      })
+      let url = 'https://safitodos.000webhostapp.com/api/todos/add'
+      let data = {
+                  td_title:"todo 1",
+                  td_body:"paragraph for todo 1",
+                  td_status:"f"
+                }
+      this.makeAPICall(url, 'POST', data).then(sdata=> console.log(sdata))
     },
 
-    updateput() {
+    updateput(currentId) {
       axios.post(`https://safitodos.000webhostapp.com/api/todos/update/${currentId}`,{
 	"td_title":"todo 1",
 	"td_body":"paragraph for todo 1",
@@ -269,7 +268,7 @@ export default {
       })
     },
 
-    deletetodos() {
+    deletetodos(currentId) {
       axios.post(`https://safitodos.000webhostapp.com/api/todos/delete/${currentId}`)
       .then(response => {
         console.log(response)
@@ -280,22 +279,27 @@ export default {
       })
     },
 
-   addnewtodos() {
-   console.log("click")
- axios.post('https://safitodos.000webhostapp.com/api/todos/add',{
-	td_title:"todo 1",
-	td_body:"paragraph for todo 1",
-	td_status:"f"
-})
- .then(response => {
-        console.log('add success',response)
-        this.addnew = response.data
-      })
-      .catch(error => {
-        console.log('add error', error)
-      })
+   async makeAPICall(url, method='GET', data = undefined) {
+     /* This method is created to make api calls */
+     /* url: the api url
+        method: call method [GET, POST, ...]
+        data: data to send to server
+    */
+   const connectionOptions = {
+     method: method,
+     mode: 'cors',
+     headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    cache: 'no-cache'
+   }
 
-
+   if(data) {
+     connectionOptions['body'] = JSON.stringify(data)
+   }
+   const response = await fetch(url, connectionOptions);
+   return response.json()
 },
    
   },
