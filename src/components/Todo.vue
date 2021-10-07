@@ -157,8 +157,13 @@
       />
     </div>
   </footer>
-  <h1>AllTODOS: {{ AllTODOSItems }}</h1>
 
+<div class="add">
+    <button @click="addnewtodos">AddNewTodo</button>
+</div>
+
+
+  <h1>AllTODOS: {{ AllTODOSItems }}</h1>
   <div v-for="adding in allTodos" :key="adding" class="adding">
     <p>allTodos: {{ adding.td_title }} {{ adding.td_body }} {{ adding.td_status }}</p>
     <div id="td">
@@ -181,7 +186,9 @@ export default {
       put: [],
       currentId: -1,
       todosId: [],
-      showIcon: false,
+      show: false,
+      addnew: [],
+	
     
      
     }
@@ -219,8 +226,9 @@ export default {
         console.log(error)
       })
     },
+
     addtodosId() {
-      axios.get(`https://safitodos.000webhostapp.com/api/todos/get/{currentId}`)
+      axios.get(`https://safitodos.000webhostapp.com/api/todos/get/${currentId}`)
       .then(response => {
         console.log(response);
         this.todosId = response.data
@@ -228,6 +236,7 @@ export default {
       .catch(error => {
         console.log(error)
       })
+
     },
     
     addpost(){
@@ -244,8 +253,9 @@ export default {
         console.log(error);
       })
     },
+
     updateput() {
-      axios.post(`https://safitodos.000webhostapp.com/api/todos/update/{currentId}`,{
+      axios.post(`https://safitodos.000webhostapp.com/api/todos/update/${currentId}`,{
 	"td_title":"todo 1",
 	"td_body":"paragraph for todo 1",
 	"td_status":"f"
@@ -258,15 +268,35 @@ export default {
         console.log(error)
       })
     },
+
     deletetodos() {
-      axios.post(`https://safitodos.000webhostapp.com/api/todos/delete/{currentId}`)
+      axios.post(`https://safitodos.000webhostapp.com/api/todos/delete/${currentId}`)
       .then(response => {
         console.log(response)
+        this.post = response.data
       })
       .catch(error => {
         console.log(error)
       })
     },
+
+   addnewtodos() {
+   console.log("click")
+ axios.post('https://safitodos.000webhostapp.com/api/todos/add',{
+	td_title:"todo 1",
+	td_body:"paragraph for todo 1",
+	td_status:"f"
+})
+ .then(response => {
+        console.log('add success',response)
+        this.addnew = response.data
+      })
+      .catch(error => {
+        console.log('add error', error)
+      })
+
+
+},
    
   },
   computed: {
@@ -298,6 +328,16 @@ export default {
 .adding #td p {
   background-color: gray;
   color: black
+}
+
+.add button {
+  background-color: rebeccapurple;
+  color: white;
+  border: 0;
+  padding: 10px 15px;
+  margin: 5px ;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 
