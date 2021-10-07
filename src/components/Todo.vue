@@ -179,9 +179,14 @@ export default {
       put: [],
       currentId: -1,
       todosId: [],
-    };
-  },
-
+      showIcon: false,
+    
+     
+    }
+       
+      
+    },
+  
   mounted() {
     console.log("page loaded");
     console.log("all todos", this.allTodos);
@@ -238,7 +243,7 @@ export default {
     updateput() {
       axios
         .post(
-          `https://safitodos.000webhostapp.com/api/todos/update/{currentId}`,
+          `https://safitodos.000webhostapp.com/api/todos/update/${currentId}`,
           {
             td_title: "todo 1",
             td_body: "paragraph for todo 1",
@@ -256,7 +261,7 @@ export default {
     deletetodos() {
       axios
         .post(
-          `https://safitodos.000webhostapp.com/api/todos/delete/{currentId}`
+          `https://safitodos.000webhostapp.com/api/todos/delete/${currentId}`
         )
         .then((response) => {
           console.log(response);
@@ -265,6 +270,7 @@ export default {
           console.log(error);
         });
     },
+   
   },
   computed: {
     AllTODOSItems() {
