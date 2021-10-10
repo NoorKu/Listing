@@ -3,10 +3,10 @@
   opacity: 0;
 }
 
-#main-div:hover #iconL {
+.main-div:hover #iconL {
   opacity: 25%;
 }
 
-#main-div:hover #iconsR {
+.main-div:hover #iconsR {
   opacity: 25%;
 }

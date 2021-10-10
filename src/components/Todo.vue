@@ -25,7 +25,6 @@
   <!-- Start Container -->
   <!-- Start 1st Face -->
   <div
- 
     class="
       flex
       justify-start
@@ -38,18 +37,16 @@
       shadow-sm
     "
   >
-    <h2 class="ml-4">Create your to-do list below </h2>
+    <h2 class="ml-4">Create your to-do list below</h2>
   </div>
   <div class="flex justify-start text-3xl md:text-5xl lg:text-5xl p-2">
     <input
       class="p-3 ml-4"
       type="text"
       placeholder="Type here e.g. buy bacon"
-     
     />
   </div>
   <div
-
     class="
       rounded
       bg-gray-800
@@ -66,10 +63,10 @@
   <!-- End 1st Face -->
   <!-- Start 2nd Face -->
   <div
-  v-for="adding in allTodos" 
-     :key="adding"
-    id="main-div"
+    v-for="adding in allTodos"
+    :key="adding.id"
     class="
+      main-div
       bg-gray-50
       flex
       justify-between
@@ -77,11 +74,11 @@
       p-4
       mt-2
       border-t-2 border-b-2
-      hover:border-gray-300
+      hover:border-gray-30
     "
-  
+    :class="adding.td_status == 't' ? 'line-through' : 'no-underline'"
   >
-    <div  class="flex justify-start items-center">
+    <div class="flex justify-start items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6"
@@ -97,24 +94,27 @@
           d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
         />
       </svg>
+
       <input
         type="checkbox"
         id="vehicle1"
         name="vehicle1"
         value="Bike"
-        class="w-7 h-7 border-green-700 ml-2"
+        class="w-7 h-7 border-green-700 ml-2 cursor-pointer"
+        @click="onclick(adding)"
       />
-      <p class="text-xs ml-3 bg-gray-200 rounded p-1 text-gray-500">
-        No due date
-      </p>
-       <div class="addtodo">
-         <p class="title">{{ adding.td_title }}</p>
-       <p class="description">{{ adding.td_body }} {{ adding.status }}</p>
-       </div>
-    </div>
-  
+      <div class="addtodo">
+        <p class="title">{{ adding.td_title }}</p>
+        <p class="description">{{ adding.td_body }} -{{ adding.td_status }}</p>
+      </div>
 
-   
+      <div class="td-text">
+        <p class="text-xs ml-3 bg-gray-200 rounded p-1 text-gray-500">
+          No due date
+        </p>
+      </div>
+    </div>
+
     <div class="flex justify-end" id="iconsR">
       <!-- side icons -->
       <svg
@@ -170,24 +170,13 @@
 
   <div class="add">
     <button @click="addpost">AddNewTodo</button>
-</div>
+  </div>
 
   <!-- <h1>AllTODOS: {{ AllTODOSItems }}</h1> -->
-  <div v-for="adding in allTodos" :key="adding" class="adding">
-    <p>
-      allTodos: {{ adding.td_title }} {{ adding.td_body }}
-      {{ adding.td_status }}
-    </p>
-    <!-- <div id="td">
-      <p>Td_title: {{ adding.td_title }}</p>
-      <p>Td-body: {{ adding.td_body }}</p>
-      <p>Td-status: {{ adding.td_status }}</p>
-    </div> -->
-  </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   data() {
     return {
@@ -196,14 +185,13 @@ export default {
       put: [],
       currentId: 1,
       todosId: [],
-      adding: []
-      // show: false,
-      // temtext: '',
-      // todos: [],
-    
+      adding: [],
+      doneTodos: [],
+      show: false,
+      temtext: "",
+    };
+  },
 
-    }},
-  
   mounted() {
     console.log("page loaded");
     console.log("all todos", this.allTodos);
@@ -234,42 +222,12 @@ export default {
 
     addtodosId() {
       axios
-        .get(`https://safitodos.000webhostapp.com/api/todos/get/${this.currentId +1}`)
+        .get(
+          `https://safitodos.000webhostapp.com/api/todos/get/${this.currentId}`
+        )
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
           this.todosId = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    updateput() {
-      axios
-        .post(
-          `https://safitodos.000webhostapp.com/api/todos/update/${this.currentId +1}`,
-          {
-            td_title: "todo 1",
-            td_body: "paragraph for todo 1",
-            td_status: "f",
-          }
-        )
-        .then((response) => {
-          console.log(response);
-          this.post = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    deletetodos() {
-      axios
-        .post(
-          `https://safitodos.000webhostapp.com/api/todos/delete/${this.currentId }`
-        )
-        .then((response) => {
-          console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -290,21 +248,49 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-        document.write(this.addpost)
     },
-    // showElement() {
-    //   this.show = !this.show
-    // },
-    // onenter( ) {
-    //   this.show = !this.show
-    //   console.log('enter')
-    
-    // }
 
-  
-      // addNew() {
-      //   this.showing.push(this.newElement)
-      // }
+    updateput() {
+      axios
+        .post(
+          `https://safitodos.000webhostapp.com/api/todos/update/${this.currentId}`,
+          {
+            td_title: "todo 1",
+            td_body: "paragraph for todo 1",
+            td_status: "f",
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          this.post = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    deletetodos() {
+      axios
+        .post(
+          `https://safitodos.000webhostapp.com/api/todos/delete/${this.currentId}`
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    onclick(todoItem) {
+      if (todoItem.td_status == "t") {
+        todoItem.td_status = "f";
+        console.log("unchecked");
+      } else {
+        todoItem.td_status = "t";
+        console.log("checked");
+      }
+    },
   },
   computed: {
     AllTODOSItems() {
@@ -312,33 +298,26 @@ export default {
     },
   },
 };
-
 </script>
 
 <style>
 .addtodo {
   margin-top: 5px;
-  font-size: 20px;
-  font-style: italic;
-  padding: 10px 15px;
-  flex: 5px;
+  padding: 10px 60px;
   justify-content: space-between;
-  /* height: 10px; */
 }
-/* .adding input:first-child {
+.addtodo :first-child {
+  font-size: 30px;
   font-weight: bold;
-  font-style: normal;
-} 
- .adding  inpute :first-child {
-  font-weight: normal;
+  text-transform: uppercase;
+}
+.addtodo :last-child {
+  font-size: 20px;
+  color: rgb(152, 152, 152);
   font-style: italic;
-} 
-.adding #td p {
-  background-color: gray;
-  color: black;
-} */
+}
 
- .add button {
+.add button {
   background: rgb(110, 47, 141);
   border: 0;
   padding: 10px 20px;
@@ -347,20 +326,4 @@ export default {
   border-radius: 20px;
   cursor: pointer;
 }
-.title p {
-  background-color: rgb(105,105,105);
-  font-size: 20px;
-  font-weight: bold;
-
-  color: bisque;
-  padding: 10px 5px;
-}
-.description p {
-   background-color: rgb(105,105,105);
-  font-size: 10px;
-  font-weight: normal;
-  font-style: italic;
-  color: bisque;
-}
- 
 </style>
