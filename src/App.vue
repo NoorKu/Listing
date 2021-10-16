@@ -1,12 +1,12 @@
 <template>
-<todo/>
+  <todos />
 </template>
 
 <script>
-import Todo from './components/Todo.vue'
+import Todos from './components/Todos.vue'
 
 export default {
   name: 'App',
-  components: { Todo }
+  components: { Todos }
 }
 </script>
