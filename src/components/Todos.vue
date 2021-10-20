@@ -155,8 +155,11 @@
             w-25
             z-10
             h-6
-            text-gray-100 text-capitalize
+            text-gray-100
+            capitalize
             bg-black
+            rounded-sm
+            text-center
             group-hover:bg-opacity-100 group-hover:text-opacity-100
           "
         >
@@ -191,6 +194,8 @@
             h-6
             text-gray-100 text-capitalize
             bg-black
+            rounded-sm
+            text-start
             group-hover:bg-opacity-100 group-hover:text-opacity-100
           "
         >
@@ -206,6 +211,7 @@
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5 mx-5 cursor-pointer"
+            id="iconOne"
             viewBox="0 0 20 20"
             fill="currentColor"
             strokeColor="currentColor"
@@ -227,6 +233,8 @@
             h-6
             text-gray-100 text-capitalize
             bg-black
+            rounded-sm
+            text-center
             group-hover:bg-opacity-100 group-hover:text-opacity-100
           "
         >
